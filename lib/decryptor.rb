@@ -3,6 +3,9 @@ require 'gpgme'
 class Decryptor
   attr_accessor :user_provided_file
 
+  MY_PRIVATE_KEY_PATH = ENV['my_private_key_path']
+  MY_PUBLIC_KEY_PATH = ENV['my_public_key_path']
+
   def initialize(user_provided_file)
     @user_provided_file = user_provided_file
   end
@@ -37,10 +40,10 @@ class Decryptor
   end
   
   def public_key
-    GPGME::Key.import(File.open("lib/private.key"))
+    GPGME::Key.import(File.open("#{MY_PUBLIC_KEY_PATH}"))
   end 
 
   def private_key
-    GPGME::Key.import(File.open("lib/private.key"))
+    GPGME::Key.import(File.open("#{MY_PRIVATE_KEY_PATH}"))
   end
 end
