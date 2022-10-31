@@ -1,10 +1,10 @@
 require 'gpgme'
+require './application.rb'
 
 class Decryptor
   attr_accessor :user_provided_file
 
   MY_PRIVATE_KEY_PATH = ENV['my_private_key_path']
-  MY_PUBLIC_KEY_PATH = ENV['my_public_key_path']
 
   def initialize(user_provided_file)
     @user_provided_file = user_provided_file
@@ -18,8 +18,9 @@ class Decryptor
   private 
 
   def decrypted_string
+    private_key
     crypto = GPGME::Crypto.new
-    crypto.decrypt file_contents
+    crypto.decrypt(file_contents)
   end
 
   def file_contents
@@ -36,13 +37,9 @@ class Decryptor
   end
 
   def decrypted_output_file_path
-    "#{user_provided_file.concat('_decrypted.txt')}"
+    "#{user_provided_file.chomp('.pgp') + '_decrypted.txt'}"
   end
   
-  def public_key
-    GPGME::Key.import(File.open("#{MY_PUBLIC_KEY_PATH}"))
-  end 
-
   def private_key
     GPGME::Key.import(File.open("#{MY_PRIVATE_KEY_PATH}"))
   end
