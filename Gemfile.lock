@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    gpgme (2.0.21)
+      mini_portile2 (~> 2.7.0)
+    mini_portile2 (2.7.1)
+
+PLATFORMS
+  arm64-darwin-21
+
+DEPENDENCIES
+  gpgme (~> 2.0.20)
+
+BUNDLED WITH
+   2.3.4

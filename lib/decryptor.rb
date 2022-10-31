@@ -15,7 +15,8 @@ class Decryptor
   private 
 
   def decrypted_string
-    # file_contents
+    crypto = GPGME::Crypto.new
+    crypto.decrypt file_contents
   end
 
   def file_contents
@@ -36,10 +37,10 @@ class Decryptor
   end
   
   def public_key
-    File.read("lib/public.key")
+    GPGME::Key.import(File.open("lib/private.key"))
   end 
 
   def private_key
-    File.read("lib/private.key")
+    GPGME::Key.import(File.open("lib/private.key"))
   end
 end
