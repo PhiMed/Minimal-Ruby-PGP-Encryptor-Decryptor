@@ -1,10 +1,11 @@
 require 'gpgme'
 require './application.rb'
 
-class Decryptor
+class DecryptorEncryptor
   attr_accessor :user_provided_file
 
-  MY_PRIVATE_KEY_PATH = ENV['my_private_key_path']
+  PRIVATE_KEY_PATH = ENV['private_key_path']
+  PUBLIC_KEY_PATH = ENV['public_key_path']
 
   def initialize(user_provided_file)
     @user_provided_file = user_provided_file
@@ -15,12 +16,23 @@ class Decryptor
      puts "#{user_provided_file} was decrypted using private key and saved as #{decrypted_output_file_path}"
   end
 
+  def encrypt
+    write_to_file(encrypted_string, encrypted_output_file_path)
+    puts "#{user_provided_file} was encrypted using public key and saved as #{encrypted_output_file_path}."
+  end
+
   private 
 
   def decrypted_string
     private_key
     crypto = GPGME::Crypto.new
     crypto.decrypt(file_contents)
+  end
+
+  def encrypted_string
+    public_key
+    crypto = GPGME::Crypto.new
+    crypto.encrypt(file_contents)
   end
 
   def file_contents
@@ -39,8 +51,16 @@ class Decryptor
   def decrypted_output_file_path
     "#{user_provided_file.chomp('.pgp') + '_decrypted.txt'}"
   end
+
+  def decrypted_output_file_path
+    "#{user_provided_file.gsub('.csv','.pgp')}"
+  end
   
   def private_key
-    GPGME::Key.import(File.open("#{MY_PRIVATE_KEY_PATH}"))
+    GPGME::Key.import(File.open("#{PRIVATE_KEY_PATH}"))
+  end
+
+  def public_key
+    GPGME::Key.import(File.open("#{PUBLIC_KEY_PATH}"))
   end
 end
