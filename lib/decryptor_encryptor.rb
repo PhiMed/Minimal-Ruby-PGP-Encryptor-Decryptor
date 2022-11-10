@@ -32,7 +32,7 @@ class DecryptorEncryptor
   def encrypted_string
     public_key
     crypto = GPGME::Crypto.new
-    crypto.encrypt(file_contents)
+    crypto.encrypt(file_contents, :always_trust => true)
   end
 
   def file_contents
@@ -52,8 +52,8 @@ class DecryptorEncryptor
     "#{user_provided_file.chomp('.pgp') + '_decrypted.txt'}"
   end
 
-  def decrypted_output_file_path
-    "#{user_provided_file.gsub('.csv','.pgp')}"
+  def encrypted_output_file_path
+    File.basename(user_provided_file,File.extname(user_provided_file)) + ".pgp"
   end
   
   def private_key
