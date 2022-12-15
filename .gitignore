@@ -5,3 +5,4 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 config/local_env.yml
+.DS_Store

@@ -49,7 +49,7 @@ class DecryptorEncryptor
   end
 
   def decrypted_output_file_path
-    "#{user_provided_file.chomp('.pgp') + '_decrypted.txt'}"
+    "#{user_provided_file.chomp('.pgp') + '.csv'}"
   end
 
   def encrypted_output_file_path
