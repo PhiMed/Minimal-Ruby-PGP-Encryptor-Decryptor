@@ -2,13 +2,14 @@ require 'gpgme'
 require './application.rb'
 
 class DecryptorEncryptor
-  attr_accessor :user_provided_file
+  attr_accessor :user_provided_file, :output_file_type
 
   PRIVATE_KEY_PATH = ENV['private_key_path']
   PUBLIC_KEY_PATH = ENV['public_key_path']
 
-  def initialize(user_provided_file)
+  def initialize(user_provided_file, output_file_type)
     @user_provided_file = user_provided_file
+    @output_file_type = output_file_type ? output_file_type : '.txt'
   end
 
   def decrypt
@@ -49,11 +50,11 @@ class DecryptorEncryptor
   end
 
   def decrypted_output_file_path
-    "#{user_provided_file.chomp('.pgp') + '.csv'}"
+    "#{user_provided_file.chomp('.pgp') + output_file_type}"
   end
 
   def encrypted_output_file_path
-    File.basename(user_provided_file,File.extname(user_provided_file)) + ".pgp"
+    user_provided_file.gsub(File.extname(user_provided_file), ".pgp")
   end
   
   def private_key
