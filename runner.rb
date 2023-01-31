@@ -1,8 +1,14 @@
 require './lib/decryptor_encryptor'
+require './lib/interactor'
+require 'optparse'
 
-if ARGV[0].include?('.pgp')
-  DecryptorEncryptor.new(ARGV[0]).decrypt
-else
-  DecryptorEncryptor.new(ARGV[0]).encrypt
-end
+action = nil
+output_file_type = nil
 
+OptionParser.new do |opts|
+  opts.on('-decrypt') { |a| action = :decrypt }
+  opts.on('-encrypt') { |a| action = :encrypt }
+  opts.on('-csv') { |a| output_file_type = '.csv' }
+end.parse!
+
+Interactor.new(ARGV[0], action, output_file_type)
