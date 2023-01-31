@@ -7,7 +7,7 @@ Methods used here are borrowed from the archived [EncryptoSigno Gem](https://git
 **Setup:**
 
 * Using your own private/public PGP key pair:
-  * Create a file in the `/config` directory of this application called `local_env.yml`
+  * Create a file in this application called `/config/local_env.yml`
   *  In that file, enter the paths to your keys like this:
     ```
       public_key_path: '/path/to/your/key' 
