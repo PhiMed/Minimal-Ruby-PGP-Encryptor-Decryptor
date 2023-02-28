@@ -9,7 +9,7 @@ class DecryptorEncryptor
 
   def initialize(user_provided_file, output_file_type)
     @user_provided_file = user_provided_file
-    @output_file_type = output_file_type ? output_file_type : '.txt'
+    @output_file_type = output_file_type
   end
 
   def decrypt
@@ -50,11 +50,18 @@ class DecryptorEncryptor
   end
 
   def decrypted_output_file_path
-    "#{user_provided_file.chomp('.pgp') + output_file_type}"
+    if output_file_type 
+      "#{user_provided_file.chomp('.pgp') + output_file_type.to_s}"
+    elsif original_extension
+      user_provided_file.gsub("--#{original_extension}--.pgp", ".#{original_extension}")
+    else
+      user_provided_file.chomp('.pgp')
+    end
   end
 
   def encrypted_output_file_path
-    user_provided_file.gsub(File.extname(user_provided_file), ".pgp")
+    user_provided_file.chomp(File.extname(user_provided_file)) + 
+      "--#{File.extname(user_provided_file).delete('.')}--" + '.pgp'
   end
   
   def private_key
