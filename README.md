@@ -20,25 +20,21 @@ From the command line:
 
 * To encrypt a file:
 
-  `$ruby runner.rb <path_to_file_you_wish_to_encrypt> -encrypt`
+  `$ruby runner.rb`
+  
+  Follow prompts.
 
   Application will encrypt the contents of the file using the _public_ key and save it in the same directory as the original with the same name, but with a '.pgp' extension replacing the original extention. 
 
 * To decrypt a file:
 
-  `$ruby runner.rb <path_to_file_you_wish_to_encrypt> -decrypt`
+  `$ruby runner.rb`
+  
+  Follow prompts.
 
   (file extension must be .pgp)
 
-  Application will decrypt it using the _private_ key, and save it as a new .txt file
-
-* Optional flags:
-
-  **-csv**
-
-    * eg. `$ruby runner.rb <path_to_file_you_wish_to_encrypt> -decrypt -csv`
-
-    * For decryption, this will override the default '.txt' and save the decrypted file as a CSV.
+  Application will decrypt it using the _private_ key, and save it in the same directory as the original what whatever extension you specify in the prompts(eg .zip) 
 
 Photo by <a href="https://unsplash.com/ja/@photolli?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Oliver Paaske</a> on <a href="https://unsplash.com/s/photos/rocks?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   
