@@ -52,16 +52,13 @@ class DecryptorEncryptor
   def decrypted_output_file_path
     if output_file_type 
       "#{user_provided_file.chomp('.pgp') + output_file_type.to_s}"
-    elsif original_extension
-      user_provided_file.gsub("--#{original_extension}--.pgp", ".#{original_extension}")
     else
       user_provided_file.chomp('.pgp')
     end
   end
 
   def encrypted_output_file_path
-    user_provided_file.chomp(File.extname(user_provided_file)) + 
-      "--#{File.extname(user_provided_file).delete('.')}--" + '.pgp'
+    user_provided_file.chomp(File.extname(user_provided_file)) + '.pgp'
   end
   
   def private_key
